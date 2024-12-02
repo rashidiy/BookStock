@@ -10,7 +10,7 @@ class Book(models.Model):
     title = models.CharField(max_length=225)
     author = models.CharField(max_length=225)
     cover = ResizedImageField(size=[600, 840], crop=['middle', 'center'], upload_to='books/')
-    categories = models.ManyToManyField(Category, 'books', null=True)
+    categories = models.ManyToManyField(Category, 'books')
     price = models.IntegerField()
     short_description = models.CharField(max_length=512, null=True, blank=True)
     long_description = models.TextField(null=True, blank=True)
@@ -21,6 +21,10 @@ class Book(models.Model):
     @property
     def rating(self):
         return self.sku
+
+
+    def __str__(self):
+        return f'<Book: {self.title}>'
 
 
 class AdditionalInfo(models.Model):
